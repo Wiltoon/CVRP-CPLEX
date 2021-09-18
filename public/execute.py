@@ -1,4 +1,6 @@
 
+from utils.estrategy import otimizarInstancia
+from classes.modeloEntrada import IntanceModelSolomon
 import os
 from argparse import ArgumentParser
 
@@ -12,5 +14,17 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Receber a entrada
+    instance = IntanceModelSolomon(
+        instance            = args.instance,
+        num_drivers         = args.drivers,
+        capacity_drivers    = args.capacity,
+        output              = args.output
+    )
+
     # Resolver Programa
+    solution = otimizarInstancia(instance=instance)
     # Construir a saída
+    #   - Os pontos -> deve ter em uma solução
+    #   - As rotas -> estará no x
+    #   - Os centroids -> estará na resolução dos centroids
+    #   - O deposito -> Ta na entrada
