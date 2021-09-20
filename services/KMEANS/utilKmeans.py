@@ -1,3 +1,4 @@
+from classes.kluteres import Klusteres
 from sklearn.cluster import KMeans
 
 def createKMeans(search,init,iteration,dataframe):
@@ -12,14 +13,18 @@ def createKMeans(search,init,iteration,dataframe):
         possibleKmeans.append(kmeans)
     return possibleKmeans
 
-def createSubSetDelivery(klusters):
+def createSubSetDelivery(klusters) -> list:
+    # Retorna um vetor de dicionarios, que apresenta
+    # [dotes:{qtd_kluster : [pedidos_do_kluster[i]]}]
     subVRP = []
+    VRPKmeans = []
     for vrp in klusters:
         dotes = {}
-        print(vrp.n_clusters)
         for k in range(vrp.n_clusters):
             dotes[k] = []
         for i in range(len(vrp.labels_)):
-            dotes[vrp.labels_[i]].append(i+1)
+            dotes[vrp[i]].append(i+1)
         subVRP.append(dotes)
-    return subVRP
+        VRPKmeans.append(vrp)
+    klusterVRP = Klusteres(VRPKmeans,subVRP)
+    return klusterVRP
