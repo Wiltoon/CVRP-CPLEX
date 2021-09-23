@@ -13,8 +13,11 @@ def createKMeans(search,init,iteration,dataframe):
         possibleKmeans.append(kmeans)
     return possibleKmeans
 
-def createSubSetDelivery(klusters) -> list:
-    # Retorna um vetor de dicionarios, que apresenta
+def createSubSetDelivery(klusters) -> Klusteres:
+    # Retorna um objeto Klusteres, que apresenta
+    # Klusteres:   
+    #  - vrpList -> Kmeans com uma quantidade de cluster definida
+    #  - subVrpList -> dicionario de dotes[k] que possui a qtd_kluster disponivel para uma lista de clientes
     # [dotes:{qtd_kluster : [pedidos_do_kluster[i]]}]
     subVRP = []
     VRPKmeans = []

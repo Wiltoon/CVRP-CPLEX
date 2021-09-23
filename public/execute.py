@@ -22,8 +22,8 @@ if __name__ == "__main__":
     )
 
     # Resolver Programa
-    dict_result = otimizarInstancia(instance=instance)
-    # solution (dicionario)
+    output_solution = otimizarInstancia(instance=instance)
+    
     #   indice representa o numero de klusters necessarios
     # Construir a saída
     #   - Os pontos -> deve ter em uma solução

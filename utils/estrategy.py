@@ -3,6 +3,7 @@
 # Mostrar as respostas encontradas para cada 'k' em um arquivo
 # Selecionar o melhor 'k' para mostrar na figura
 
+from classes.output import OutputSolutionModel
 from classes.solution import Solution
 from classes.result import Result
 from classes.modeloEntrada import IntanceModelSolomon
@@ -13,8 +14,8 @@ def returnMinimumValueDict(kMin: dict):
     for i in sorted(kMin, key = kMin.get.objetivo):
         return [i, kMin[i]]
 
-def selectBetterKMeans(subVRP, instance: IntanceModelSolomon, time_exec: int) -> dict:
-    # Retorna um vetor onde as posições são:
+def selectBetterKMeans(subVRP:list(int), instance: IntanceModelSolomon, time_exec: int) -> OutputSolomon:
+    # Retorna a melhor seleção em uma lista, onde cada posição:
     # [qtd_klusters_necessarios, Result(
     #   objetivoTotalCalculado,
     #   [lista de (Result) de cada subVRP dentro do VRP]
@@ -46,14 +47,25 @@ def otimizarInstancia(instance: IntanceModelSolomon):
         search      = [Kmin,Kmax]  
     )
     #Capturar a lista de um subVRP e otimizar com o CPLEX
-    subVRP = createSubSetDelivery(possibles)
+    klusterVRP = createSubSetDelivery(possibles)
+    kExists = klusterVRP.vrpList
+    subVRP = klusterVRP.subVrpList
     kSelect = selectBetterKMeans(
         subVRP      = subVRP, 
         instance    = instance, 
         time_exec   = 5
     )
+    qKluster = kSelect[0]
+    solutions = kSelect[1]
+    centroids = kExists[qKluster]
+    output = OutputSolutionModel(
+        instance = instance, 
+        num_kluster= qKluster, 
+        partialSolutions= solutions,
+        centroids=centroids
+    )
     # deve entregar uma solução contendo, x, centroids, e a entrada do arquivo
-    return kSelect
+    return output
     
     
         
