@@ -1,19 +1,19 @@
-def relaxAndFix(sets, setBinSize, windowType, overLap, timeLimit):
-    auxSet = sets.copy()
-    length = len(sets)
-    setCurrent  = auxSet.pop(0)
-    fix         = []
-    set_int     = []
-    relax       = []
-    set_int     = set_int.append(setCurrent)
-    relax       = auxSet.copy()
-    condition   = True
-    while condition:
-        model       = constructProblem(fix, set_int, relax)
-        resultFix   = solveRF(model) ## local onde é resolvido o modelo
-        fix.append(resultFix)
-        setCurrent  = relax.pop(0)
-        set_int     = setCurrent
+from classes.relaxFixCVRP import RelaxFixCVRP
 
-    setVarBin = fix
-    return setVarBins
+
+def relaxAndFix(partitions, timeLimit):
+    # Retorna uma lista com a respostas fixadas das partitions
+    auxSet = partitions.copy()
+    length = len(partitions)
+    setCurrent      = auxSet.pop(0)
+    relaxFixCvrp    = RelaxFixCVRP()
+    relaxFixCvrp.set_int    = relaxFixCvrp.set_int.append(setCurrent)
+    relaxFixCvrp.relax      = auxSet.copy()
+    while length != len(relaxFixCvrp.fix):
+        model       = relaxFixCvrp.constructProblem()
+        resultFix   = relaxFixCvrp.solveRF(model) ## local onde é resolvido o modelo
+        relaxFixCvrp.fix.append(resultFix)
+        setCurrent  = relaxFixCvrp.relax.pop(0)
+        relaxFixCvrp.set_int     = []
+        relaxFixCvrp.set_int     = relaxFixCvrp.set_int.append(setCurrent)
+    return relaxFixCvrp.fix
